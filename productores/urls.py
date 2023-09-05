@@ -3,4 +3,4 @@ from rest_framework import routers
 from productores import views
 
 router = routers.DefaultRouter()
-router.register(r"productores", views.ProductoresModelViewSet)
+router.register("productores", views.ProductoresModelViewSet)
