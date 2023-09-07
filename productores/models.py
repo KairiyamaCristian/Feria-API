@@ -1,9 +1,8 @@
 from django.db import models
+from shared.models import User
 
 
 # Create your models here.
 class Productor(models.Model):
-    nombre = models.TextField(max_length=500)
-    apellido = models.TextField(max_length=500)
-    dni = models.IntegerField(default=0)
-    domicilio = models-TextField(max_length=500)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    descripcion = models.CharField(max_length=512)

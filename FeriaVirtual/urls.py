@@ -16,13 +16,15 @@ Including another URLconf
 """
 from django.urls import path, include
 from rest_framework.routers import SimpleRouter
-from productores.urls import router as productores_router
+from productores.urls import urlpatterns as productores_router
 from jwt_auth.urls import urlpatterns as auth_router
 
-api_router = SimpleRouter()
-# api_router.register(r"productores", include(productores_router.urls), "productores")
+api_router = [
+    path(r"productores/", include(productores_router)),
+    path(r"auth/", include(auth_router)),
+]
 
 
 urlpatterns = [
-    path("api/", include(api_router.urls + auth_router)),
+    path(r"api/", include(api_router)),
 ]

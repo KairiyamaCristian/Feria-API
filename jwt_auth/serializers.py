@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -7,13 +7,14 @@ DEFAULT_AUTH_FAIL_DETAIL = "Credenciales invalidas."
 
 
 class LoginSerializer(serializers.Serializer):
-    user = serializers.CharField(max_length=255)
+    user_model = get_user_model()
+    user: user_model = serializers.EmailField()
     password = serializers.CharField(max_length=255)
 
-    def get_user(self) -> User:
+    def get_user(self):
         try:
-            user = User.objects.get(username=self.validated_data["user"])  # type: ignore
-        except User.DoesNotExist:
+            user = self.user_model.objects.get(username=self.validated_data["user"])  # type: ignore
+        except self.user_model.DoesNotExist:
             raise AuthenticationFailed(detail=DEFAULT_AUTH_FAIL_DETAIL)
         return user
 
