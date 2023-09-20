@@ -1,0 +1,28 @@
+# fly.toml app configuration file generated for feria-api-tsds on 2023-09-14T17:32:17-03:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "feria-api-tsds"
+primary_region = "scl"
+console_command = "/code/manage.py shell"
+
+[env]
+  DB_HOST = "feria-api-tsds-db.internal"
+  DB_NAME = "postgres"
+  DB_USER = "postgres"
+  DJANGO_SUPERUSER_EMAIL = "admin@gmail.com"
+  DJANGO_SUPERUSER_USERNAME = "admin"
+  PORT = "8000"
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+[[statics]]
+  guest_path = "/code/static"
+  url_prefix = "/static/"

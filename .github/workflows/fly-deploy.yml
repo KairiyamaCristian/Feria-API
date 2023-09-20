@@ -1,0 +1,36 @@
+name: Fly Deploy
+on:
+  push:
+    branches:
+      - main
+env:
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+jobs:
+  #test:
+  #    name: CI - test
+  #    runs-on: ubuntu-latest
+  #    steps:
+  #      - uses: actions/checkout@v3
+  #    
+  #      - uses: actions/setup-python@v4
+  #        name: setup python
+  #        with:
+  #          python-version: '3.11' # Version range or exact version of a Python version to use, using SemVer's version range syntax
+#
+  #      - name: Install required packages
+  #        run: pip install -r requirements.txt
+#
+  #      - name: run tests
+  #        run: python3 manage.py test --failfast --noinput
+
+  deploy:
+      # needs:
+      #   - test
+      name: Deploy app
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - uses: superfly/flyctl-actions/setup-flyctl@master
+        - run: flyctl deploy --remote-only
+
+        #

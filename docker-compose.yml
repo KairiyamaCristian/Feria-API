@@ -1,0 +1,34 @@
+version: '3.1'
+
+services:
+  api: 
+    build: .
+    ports:
+      - 8000:8000
+    environment:
+      DB_HOST: db
+      DB_NAME: root
+      DB_PASSWORD: example
+      DB_USER: root
+      DJANGO_SUPERUSER_USERNAME: admin
+      DJANGO_SUPERUSER_EMAIL: admin@gmail.com
+      DJANGO_SUPERUSER_PASSWORD: Admin1234!
+      PORT: 8000
+    depends_on:
+      - db
+    
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: root
+    ports:
+      - 5432:5432
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
